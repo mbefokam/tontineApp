@@ -1,0 +1,24 @@
+{
+    "local": {
+        "username": "root"
+        , "password": ""
+        , "database": "mac_usa"
+        , "host": "127.0.0.1"
+        , "dialect": "mysql"
+        
+    }
+    , "dev": {
+        "username": "root"
+        , "password": null
+        , "database": "mac_usa"
+        , "host": "127.0.0.1"
+        , "dialect": "mysql"
+    }
+    , "prod": {
+        "username": "root"
+        , "password": null
+        , "database": "mac_usa"
+        , "host": "127.0.0.1"
+        , "dialect": "mysql"
+    }
+}

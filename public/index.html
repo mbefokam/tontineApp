@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="angular-material/angular-material.min.css">
+</head>
+
+<body ng-app="matApp" ng-cloak ng-controller="IndexCtrl as vm">
+    <md-content>
+        <md-toolbar class="md-primary" md-whiteframe="2">
+            <div class="md-toolbar-tools">
+                <a ng-click="vm.home()"><h1><strong>"Tontine App"</strong></h1></a>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <ng-view></ng-view>
+    </md-content>
+</body>
+<script src="angular/angular.js"></script>
+<script src="angular-route/angular-route.min.js"></script>
+<script src="angular-animate/angular-animate.min.js"></script>
+<script src="angular-aria/angular-aria.min.js"></script>
+<script src="angular-messages/angular-messages.min.js"></script>
+<script src="angular-material/angular-material.min.js"></script>
+
+<!-- App Scripts -->
+<script src="app.module.js"></script>
+
+<!-- Module 1 -->
+<script src="module/module.js"></script>
+<script src="module/controllers/module.controllers.js"></script>
+    
+<!--<script src="users/users.module.js"></script>
+    <script src="users/controllers/users.controller.js"></script>-->
+
+</html>
