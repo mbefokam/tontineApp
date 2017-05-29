@@ -58,16 +58,17 @@ module.exports = function (sequelize, DataTypes) {
         , instanceMethods: {
             create: function (req, onSuccess, onError) {
                 finances.create(req, {}).then(onSuccess).error(onError);
-            }
-            , update: function (id, onSuccess, onError) {
-                finances.update({
+            },
+            updatePayment: function (req, onSuccess, onError) {
+               console.log("I AM HERE ...")
+               console.log(req.id)
+                finances.update(req,{
                     where: {
-                        id: id
+                        id: req.id
                     }
                 }).then(onSuccess).error(onError);
             }
             , read: function (onSuccess, onError) {
-              console.log("I AM HERE ...")
                 finances.findAll({
                   limit: 1,
                   order: [['id','DESC']]
@@ -81,6 +82,13 @@ module.exports = function (sequelize, DataTypes) {
                     /*where: {
                         statusDeRecouvrement: 'active'
                     }*/
+                }).then(onSuccess).error(onError);
+            },
+            readAid: function (req, onSuccess, onError) {
+                finances.find({
+                  where: {
+                      id: req.tfid
+                  }
                 }).then(onSuccess).error(onError);
             }
         , }

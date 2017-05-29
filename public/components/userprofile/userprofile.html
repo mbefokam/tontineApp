@@ -135,10 +135,12 @@
                                     <th ><a >AIDES <i class="fa fa-sort"></i></a></th>
                                     <th ><a >DESCRITIONS <i class="fa fa-sort"></i></a></th>
                                     <th ><a >DATE <i class="fa fa-sort"></i></a></th>
-                                    <th ><a >RECOUVREMENTS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AMOUNT <i class="fa fa-sort"></i></a></th>
                                     <th ><a >DUE DATE <i class="fa fa-sort"></i></a></th>
                                     <th ><a >PAYMENTS <i class="fa fa-sort"></i></a></th>
-                                    <th ><a >PAYMENT STATUS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >PAY DATE <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL  <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >STATUS <i class="fa fa-sort"></i></a></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -149,6 +151,8 @@
                                         <td>{{"$ "+myFinances.recouvrements}}</td>
                                         <td>{{myFinances.dueDate}}</td>
                                         <td>{{"$ "+myFinances.payments}}</td>
+                                        <td>{{myFinances.paymentDate}}</td>
+                                        <td>{{"$ "+myFinances.totalPayments}}</td>
                                         <td>{{myFinances.status}}</td>
                                     </tr>
                                 </tbody>

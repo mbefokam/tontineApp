@@ -15,12 +15,16 @@ module.exports = function (sequelize, DataTypes) {
         }, recouvrements: {
             type: DataTypes.DECIMAL(5, 2)
             ,defaultValue: '0'
-        }, 
+        },
         aides: {
             type: DataTypes.DECIMAL(5, 2)
             ,defaultValue: '0'
         }
         , descriptions: {
+            type: DataTypes.STRING
+            ,defaultValue: ''
+        },
+        paymentDate: {
             type: DataTypes.STRING
             ,defaultValue: ''
         },
@@ -31,11 +35,11 @@ module.exports = function (sequelize, DataTypes) {
         date: {
             type: DataTypes.STRING
             ,defaultValue: ''
-        }, 
+        },
         dueDate: {
             type: DataTypes.STRING
             ,defaultValue: ''
-        }, 
+        },
         totalPayments: {
             type: DataTypes.DECIMAL(5, 2)
             ,defaultValue: '0'
@@ -44,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING
             ,defaultValue: ''
         }
-        
+
     }, {
         freezeTableName: true
         , tableName: 'userFinances'
@@ -58,10 +62,11 @@ module.exports = function (sequelize, DataTypes) {
             create: function (req, onSuccess, onError) {
                 userFinance.create(req, {}).then(onSuccess).error(onError);
             }
-            , update: function (id, onSuccess, onError) {
-                userFinance.update({
+            , update: function (req, onSuccess, onError) {
+              
+                userFinance.update(req,{
                     where: {
-                        id: id
+                        id: req.id
                     }
                 }).then(onSuccess).error(onError);
             }

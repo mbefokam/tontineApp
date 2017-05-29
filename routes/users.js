@@ -6,6 +6,7 @@ var address = require('../controllers/addresses')
 var finances = require('../controllers/finances')
 var monthlyFees = require('../controllers/monthlypayments')
 var monthlyReport = require('../controllers/monthlyReports')
+var userFinance = require('../controllers/userFinances')
 
 router.post('/user', function (req, res) {
      users.retrieveUser(req, function (userData) {
@@ -17,8 +18,6 @@ router.post('/user', function (req, res) {
          }
      });
  });
-
-
 
 router.get('/all/user/to/aids', function (req, res) {
 
@@ -137,8 +136,6 @@ router.get('/read/:id/address', function (req, res) {
      });
  });
 
-
-
 router.get('/read/monthlyfees', function (req, res) {
 
      monthlyFees.readAll(function (monthlyfees) {
@@ -199,10 +196,6 @@ router.post('/insert/monthly/tontine', function (req, res) {
      });
  });
 
-
-
-
-
 router.get('/read/finances', function (req, res) {
 
      finances.read(function (finances) {
@@ -214,7 +207,6 @@ router.get('/read/finances', function (req, res) {
          }
      });
  });
-
 
 router.post('/report/category', function (req, res) {
 
@@ -239,5 +231,15 @@ router.post('/report/category', function (req, res) {
      });
  });
 
-
+ router.post('/aids/payment', function (req, res) {
+   
+      userFinance.paymentsRec(req, function (paymentData) {
+          if (paymentData) {
+              res.json(paymentData);
+          }
+          else {
+              res.send(401, "data not found in the table");
+          }
+      });
+  });
 module.exports = router;

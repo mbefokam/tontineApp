@@ -70,7 +70,7 @@ app.controller('dashCtrl',function($scope,$http,$rootScope,$document,$state, $md
       // console.log("memberAid.date "+ $scope.memberAid.date)
       // console.log("memberAid.dueDate "+$scope.memberAid.dueDate)
         $scope.save = function() {
-        
+      //$scope.memberAid.descriptions = $scope.memberAid.descriptions +" "+ $scope.getSelectedText.descriptions
           $http.post('/api/user/recouvrements', $scope.memberAid).then(function(data){
 
                }, function(err){
@@ -83,9 +83,9 @@ app.controller('dashCtrl',function($scope,$http,$rootScope,$document,$state, $md
 
     $scope.getSelectedText = function() {
       if ($scope.selectedItem !== undefined) {
-        return "You have selected: Item " + $scope.selectedItem;
+        return "of "+ $scope.selectedItem;
       } else {
-        return "Please select an item";
+        return " ";
       }
     };
      $scope.buttonName= "Click Me"
