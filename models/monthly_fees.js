@@ -13,8 +13,10 @@ module.exports = function (sequelize, DataTypes) {
         }
         , activitiesFees: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }, foodFees: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
         , months: {
             type: DataTypes.STRING

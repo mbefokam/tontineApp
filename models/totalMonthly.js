@@ -12,19 +12,19 @@ module.exports = function (sequelize, DataTypes) {
             , allowNull: false
         }, totalFoodFees: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }, totalActivitiesFees: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
         , totalTontineOne: {
             type: DataTypes.DECIMAL(5, 2)
-        }
-        ,  totalActivitiesFees: {
-            type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
          , totalTontineTwo: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
-        
         
     }, {
         freezeTableName: true

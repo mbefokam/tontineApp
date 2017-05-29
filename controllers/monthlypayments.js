@@ -1,52 +1,63 @@
-var monthfees = require('../models/index').MONTHLY_FEES;
+var monthfees = require('../models/index').MONTHLY_REPORTS;
 var users = require('../models/index').USERS;
 var tMonthfees = require('../models/index').TOTAL_MONTHLYFEES;
-var tontine = require('../models/index').TONTINE;
 var async = require('async');
 var empty = require('is-empty');
+
+
+
 
 
 
 module.exports.createUserPayments = function (req, cb) {
     var response = new Array();
     monthArrays = req.body
-    async.forEachLimit(monthArrays, 1, function (monthArray, dataCallback) {
+    console.log("I AM HERE......monthArray")
+               console.log(monthArrays.length)
+   async.forEach(monthArrays, function (monthArray, dataCallback) {
+  //   async.each(monthArrays,function(monthArray,dataCallback) {   
         async.waterfall([
          function (callback) {
                 var tmonthfees = tMonthfees.build();
-             
-                tmonthfees.read(monthArray,function (data) {
-                if (data.totalActivitiesFees ) {}
+               
+                tmonthfees.read(monthArray,function (tmonth) {
+                if (tmonth.totalActivitiesFees ) {}
                 else
-                {data.totalActivitiesFees = 0.00}
-                    if (data.totalFoodFees){}
-                    else{data.totalFoodFees = 0.00}
-                    data.totalActivitiesFees = data.totalActivitiesFees + monthArray.activitiesFees
-                    data.totalFoodFees = monthArray.foodFees + data.totalFoodFees
-                    
+                {tmonth.totalActivitiesFees = 0.00}
+                if (tmonth.totalFoodFees){}
+                else{tmonth.totalFoodFees = 0.00}
+                    tmonth.totalActivitiesFees = tmonth.totalActivitiesFees + monthArray.activitiesFees
+                    tmonth.totalFoodFees = monthArray.foodFees + tmonth.totalFoodFees
+                    var monthly = updateMonthlyfees(tmonth)
 
-                    callback(null, data,monthArray)
+                    tmonthfees.update(monthly, function (data) {
+                    response.push(data)
+                     })
+
+
+                   callback(null, tmonth,monthArray)
                 })
+                 
             }
             
-         , function (tmonth, monthArray, callback) {
+          , function (tmonth, monthArray, callback) {
                  
-                var monthfee = monthfees.build();
-                    monthfee.create(monthArray,function (data) {
-                        response.push(tmonth)
-                        response.push(data)
-                    })
-             callback(null, response,tmonth)
-            }  , function (response, monthData, callback) {                
-                var monthly = updateMonthlyfees(monthData)     
+                 var monthfee = monthfees.build();
+                     monthfee.create(monthArray,function (data) {
+                     response.push(data)
+                     })
+              callback(null, response,tmonth)
+             }
+            ,function (response, tmonth, callback) {                
+                var monthly = updateMonthlyfees(tmonth)     
                 var tmonthfees = tMonthfees.build();
                 tmonthfees.update(monthly, function (data) {
                     callback(null, data);
                 })
             }
     ], function (err, result) {
-           // response.push(hfAndLoc)
-            dataCallback(response)
+            response.push(result)
+            dataCallback()
         });
     }, function (err) {
         console.log("Monthly Fees For Loop Completed");
@@ -54,9 +65,68 @@ module.exports.createUserPayments = function (req, cb) {
     });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//module.exports.createUserPayments = function (req, cb) {
+//    var response = new Array();
+//    monthArrays = req.body
+//    console.log("I AM HERE......monthArray")
+//               console.log(monthArrays.length)
+//   async.forEach(monthArrays, function (monthArray, dataCallback) {
+//   //  async.each(monthArrays,function(monthArray,dataCallback) {   
+//        
+//                var tmonthfees = tMonthfees.build();
+//               
+//                tmonthfees.read(monthArray,function (tmonth) {
+//                if (tmonth.totalActivitiesFees ) {}
+//                else
+//                {tmonth.totalActivitiesFees = 0.00}
+//                if (tmonth.totalFoodFees){}
+//                else{tmonth.totalFoodFees = 0.00}
+//                    tmonth.totalActivitiesFees = tmonth.totalActivitiesFees + monthArray.activitiesFees
+//                    tmonth.totalFoodFees = monthArray.foodFees + tmonth.totalFoodFees
+//                    var monthly = updateMonthlyfees(tmonth)
+//
+//                    tmonthfees.update(monthly, function (data) {
+//                    response.push(data)
+//                     })
+//
+//                })
+//                  var monthfee = monthfees.build();
+//                    monthfee.create(monthArray,function (data) {
+//                      response.push(data)
+//                    })
+//       
+//       dataCallback
+//    
+//    }, function (err) {
+//        console.log("Monthly Fees For Loop Completed");
+//        dataCallback(response);
+//    });
+//    cb(response)
+//}
+
 module.exports.createUserTontine = function (req, cb) {
     var response = new Array();
     monthArrays = req.body
+    var lenght = monthArrays.length
     async.forEachLimit(monthArrays, 1, function (monthArray, dataCallback) {
         async.waterfall([
          function (callback) {
@@ -110,8 +180,9 @@ module.exports.createUserTontine = function (req, cb) {
                 })
         }
     ], function (err, result) {
-           // response.push(hfAndLoc)
-            dataCallback(response)
+
+            response.push(result)
+            dataCallback()
         });
     }, function (err) {
         console.log("Monthly Fees For Loop Completed");
@@ -198,4 +269,97 @@ function userObject (data){
     
     return user
    
+}
+
+
+module.exports.activitiesReport = function (cb) {
+    var reports = []
+     async.waterfall([
+         function (callback) {
+              var monthfee = monthfees.build();
+                  monthfee.readAll(function (data) {
+                callback(null, data);
+             })  
+            }
+            
+         , function (userMonthlyDatas, callback) {
+
+
+            async.forEach(userMonthlyDatas, function(userMonthlyData, userCallback){
+
+                        var  readUser =  users.build();
+                        readUser.readOne(userMonthlyData ,function (data) {
+                      
+                        var report = userReport(userMonthlyData, data)
+                        reports.push(report)
+                        // console.log('I AM HERE ...');
+                        // console.log(JSON.stringify(report))
+                        userCallback()
+                     })
+  
+
+            }, function(err){
+                  console.log("User For Loop Completed");
+                  console.log(JSON.stringify(reports))
+                  callback(reports)
+            })
+
+           }
+         ], function (err, result) {
+            console.log("ALL DONE....");
+            cb(reports)
+        });
+
+}
+
+
+function userReport (data, userData){
+   var user = {
+            "member":"",
+            "JAN":"",
+            "FEB":"",
+            "MAR":"",
+            "APR":"",
+            "MAY":"",
+            "JUN":"",
+            "JUL":"",
+            "AUG":"",
+            "SEPT":"",
+            "OCT":"",
+            "NOV":"",
+            "DEC":"",
+            "TOTAL":""
+            }
+    
+    user.member = userData.firstName + ", "+userData.lastName
+    user.JAN  = checkUndefined(data.JAN)
+    user.FEB = checkUndefined(data.FEB)
+    user.MAR = checkUndefined(data.MAR)
+    user.APR = checkUndefined(data.APR)
+    user.MAY = checkUndefined(data.MAY)
+    user.JUN = checkUndefined(data.JUN)
+    user.JUL = checkUndefined(data.JUL)
+    user.AUG = checkUndefined(data.AUG)
+    user.SEPT = checkUndefined(data.SEPT)
+    user.OCT = checkUndefined(data.OCT)
+    user.NOV = checkUndefined(data.NOV)
+    user.DEC = checkUndefined(data.DEC)
+    user.TOTAL = checkUndefined(data.JAN) + checkUndefined(data.FEB)  +  checkUndefined(data.MAR) +  checkUndefined(data.APR)  +  checkUndefined(data.MAY) +  checkUndefined(data.JUN)  +  checkUndefined(data.JUL)  + checkUndefined(data.AUG ) +    checkUndefined(data.SEPT) + checkUndefined(data.OCT) +  checkUndefined(data.NOV)  + checkUndefined(data.DEC)
+    
+    // console.log('I AM HERE ...');
+    // console.log(JSON.stringify(data))
+    // console.log(JSON.stringify(userData))
+    // console.log(JSON.stringify(user))
+
+    return user
+   
+}
+
+function checkUndefined (data){
+
+    if(data=="undefined"){
+        data = 0
+    }
+
+    return data
 }

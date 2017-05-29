@@ -13,18 +13,22 @@ module.exports = function (sequelize, DataTypes) {
         }
         , street: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , street2: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , city: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , state: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
-        ,zipCode: { type: DataTypes.STRING}
-        
+        ,zipCode: { type: DataTypes.STRING
+                   ,defaultValue: ''}
         
     }, {
         freezeTableName: true

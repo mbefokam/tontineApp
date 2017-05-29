@@ -13,12 +13,15 @@ module.exports = function (sequelize, DataTypes) {
         }
         , payments: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
         , reasons: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , date: {
             type: DataTypes.DATE
+            ,defaultValue: ''
         }
         
     }, {

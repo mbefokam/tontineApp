@@ -10,8 +10,8 @@ var empty = require('is-empty');
 
 
 module.exports.read = function (cb) {
-    
-    var finance = finances.build();
+
+    var finance = accoutFinances.build();
     finance.read(function (data) {
         cb(data);
     })
@@ -20,25 +20,26 @@ module.exports.read = function (cb) {
 
 
 
-
-
-
-
-
 module.exports.recouvrement = function (aideMembre, cb) {
-  //  var montant = aideMembre.body.aides
-   // console.log(aideMembre.body)
+
     async.waterfall([
-        
+
     function (callback) {
+
+          var date1 = aideMembre.body.date.split("T")[0]
+          var duDate1 = aideMembre.body.dueDate.split("T")[0]
+
+            aideMembre.body.date = date1
+            aideMembre.body.dueDate = duDate1
+
             var finance = accoutFinances.build();
             finance.read(function (data) {
              var financeObj = financefunc (aideMembre.body, data)
              callback(null,financeObj)
     })
-    },    
+    },
     function (financeObj, callback) {
-        
+
             var user = users.build()
             var finObj = financeObj
             user.read(function (userArray) {
@@ -47,13 +48,13 @@ module.exports.recouvrement = function (aideMembre, cb) {
                 finObj.recouvrements = recouvrement
                 callback(null, finObj, userArray)
             })
-           
-     }, 
+
+     },
      function (financeObj, userArray, callback) {
             // var usearray = userArray
              var afinance = accoutFinances.build();
              afinance.create(financeObj,function (aideRec) {
-                 
+
              callback(null ,aideRec ,userArray)
     })
   },
@@ -62,12 +63,12 @@ module.exports.recouvrement = function (aideMembre, cb) {
             var user = users.build()
             var financeArr = [];
             var userRec = insertRecouvrement(aideRec)
-            
+
             userArrays.forEach(function (userArray, index) {
                 userRec.uid = userArray.id
                 ufinance.create(userRec, function (data) {
                     userArray.assurance = userArray.assurance - data.recouvrements
-                    
+
                     userupdate = updateUser(userArray)
                     financeArr.push(userupdate)
                 })
@@ -106,7 +107,7 @@ function updateUser(userData) {
 }
 
 function insertRecouvrement(recouvrement){
-    
+
     var returnData = {
         "uid": 0,
         "tfid": 0,
@@ -117,7 +118,7 @@ function insertRecouvrement(recouvrement){
         "date": "",
         "dueDate": "",
         "totalspayments": 0.00,
-        "status": "unpaid"   
+        "status": "unpaid"
     }
     var tfid =  recouvrement.id
     returnData.tfid  = tfid
@@ -127,13 +128,13 @@ function insertRecouvrement(recouvrement){
     returnData.date = recouvrement.date
     returnData.dueDate = recouvrement.dueDate
     returnData.totalspayments = recouvrement.totalspayments
-    
-    
+
+
     return returnData
 }
 
 function financefunc (recouvrement, finance){
-    
+ console.log(recouvrement)
     var financeObj = {
         "aides": 0.00,
         "recouvrements": 0.00,
@@ -151,24 +152,7 @@ function financefunc (recouvrement, finance){
     financeObj.dueDate = recouvrement.dueDate
     financeObj.totalAssrance = finance[0].totalAssrance - recouvrement.aides
     financeObj.totalInscription = finance[0].totalInscription
-    
+
     return financeObj
-    
+
 }
-
-//console.log("************************") 
-//    console.log(JSON.stringify(recouvrement.id))
-//    console.log(returnData)
-//    console.log("************************")
-
-/*async.each(userReturns, function (userReturn, clb) {
-                    aideRec.uid = userReturn.id
-                    finance.create(aideRec, function (data) {
-                        userReturn.assurance = userReturn.assurance - data.recouvrement
-                        userReturn = updateUser(userReturn)
-                        financeArr.push(userReturn)
-                    })
-                    clb(financeArr)
-                }, function (Error) {
-                    callback(financeArr)
-                })*/

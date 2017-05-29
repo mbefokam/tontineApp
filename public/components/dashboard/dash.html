@@ -1,0 +1,348 @@
+<div class="container" layout="column" ng-cloak>
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <!--<md-button ng-click="toggleLeft()" class="md-primary">
+        Menu
+      </md-button>-->
+            <md-button class="md-fab md-primary" aria-label="Navigation" ng-click="toggleLeft()">
+                <md-icon md-component-id="left" class="md-sidenav-left" md-svg-icon="../img/home/menu.png"></md-icon> Menu </md-button>
+            <h2 class="md-flex">Welcome : <p style="display:inline" ng-bind="vm.userData.firstName"></h2> </div>
+    </md-toolbar>
+    <md-content flex layout-padding>
+        <section layout="row" flex="">
+            <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" id="leftSideNav" md-disable-backdrop="true">
+                <md-toolbar class="md-theme-indigo" layout="row">
+                    <h1 class="md-toolbar-tools">Admin Menu </h1> <span flex></span>
+                    <md-button ng-click="close()">Close</md-button>
+                </md-toolbar>
+                <md-content layout-padding="" layout="column" layout-align="start start">
+                    <md-button ng-click="show('newAids')" class="md-primary">new-aids</md-button>
+                    <md-button ng-click="show('myFinances')" class="md-primary">activities fees payment</md-button>
+                    <md-button ng-click="show('monthlyPayments')" class="md-primary">my-Monthly Payments</md-button>
+                    <md-button ng-click="show('gAMeetings')" class="md-primary">GA Meetings planning</md-button>
+                    <md-button ng-click="show('monthlyFeesReport')" class="md-primary">MAC-Monthly Fees Report</md-button>
+                    <md-button ng-click="show('monthlyfood')" class="md-primary">MAC-Monthly Foods Report Fees</md-button>
+                    <md-button ng-click="show('tontines')" class="md-primary">MAC-Monthly Tontine Reports</md-button>
+                </md-content>
+            </md-sidenav>
+            <!-- <md-content flex="" layout-padding="" layout="column" layout-align="top center"> -->
+                <div ng-switch="toShow">
+                    <div ng-switch-when="newAids">
+
+                      <form name="myForm">
+    <p>
+                   Note MAC-USA can only help those members who are actually insured
+    </p>
+
+    <div layout="row" layout-align="start" flex>
+      <md-input-container flex>
+        <label>Aid descriptions</label>
+        <input type="text" name="quest" ng-model="memberAid.descriptions" required />
+      </md-input-container>
+
+
+    </div>
+    <div layout="row" layout-align="start" flex>
+    <md-input-container flex>
+      <label>List of Insured Members</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()" required>
+        <md-optgroup label="List of Members Insured ">
+          <md-option ng-value="item" ng-repeat="item in items">{{item}}</md-option>
+        </md-optgroup>
+      </md-select>
+      <div class="errors" ng-messages="myForm.favoriteColor.$error">
+        <div ng-message="required">Required</div>
+      </div>
+    </md-input-container>
+
+
+    </div>
+
+     <md-input-container fex>
+     <label>Aid Rate (USD)</label>
+     <input ng-model="memberAid.aides" type="number" step="0.01">
+   </md-input-container>
+
+   <div layout="row" layout-align="start" flex>
+     <div layout="row" layout-align="start" flex"85">
+
+          <h4>Start Date </h4>
+          <md-datepicker
+             ng-model="memberAid.date"
+             md-placeholder="Enter date">
+           </md-datepicker>
+          <h4>Due dates</h4>
+          <md-datepicker
+             ng-model="memberAid.dueDate"
+             md-placeholder="Enter date">
+           </md-datepicker>
+       </div>
+       <div layout="row" layout-align="end" flex"15">
+         <md-button ng-click="save()" class="md-primary">Save</md-button>
+       </div>
+   </div>
+
+
+
+
+
+    <div layout="column" flex-gt-md="30" class="range layout-column flex-gt-md-30">
+      <!-- <md-input-container>
+                <label>Start date</label>
+                <md-datepicker ng-model="memberAid.date"></md-datepicker>
+      </md-input-container>
+      <md-input-container>
+                <label>Due  date</label>
+                <md-datepicker ng-model="memberAid.dueDate"></md-datepicker>
+      </md-input-container>
+
+      <div layout="column" flex-gt-md="30" class="range layout-column flex-gt-md-30">
+          <md-input-container class="md-input-has-placeholder">
+            <label>Start Date/Time</label>
+            <input mdc-datetime-picker="" date="true" time="true" type="text"
+              placeholder="Date" max-date="dateTimeEnd" ng-model="dateTimeStart" class=" md-input"
+              readonly="readonly" id="input_0">
+              <div class="md-errors-spacer"></div>
+          </md-input-container>
+
+          <md-input-container class="md-input-has-placeholder">
+            <label>End Date/Time</label>
+            <input mdc-datetime-picker="" date="true" time="true" type="text"
+            placeholder="Date" min-date="dateTimeStart"="dateTimeEnd" class=" md-input" readonly="readonly"
+            id="input_1">
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+      </div> -->
+
+</div>
+  </form>
+
+
+
+                    </div>
+                    <div ng-switch-when="myFinances">
+                      <form name="myForm">
+    <p>
+                MAC-USE FINANCES
+    </p>
+
+    <div layout="row" layout-align="start" flex>
+      <md-input-container flex>
+        <label>Aid descriptions</label>
+        <input type="text" name="quest" ng-model="memberAid.descriptions" required />
+      </md-input-container>
+
+
+    </div>
+    <div layout="row" layout-align="start" flex>
+    <md-input-container flex>
+      <label>List of Insured Members</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()" required>
+        <md-optgroup label="List of Members Insured ">
+          <md-option ng-value="item" ng-repeat="item in items">{{item}}</md-option>
+        </md-optgroup>
+      </md-select>
+      <div class="errors" ng-messages="myForm.favoriteColor.$error">
+        <div ng-message="required">Required</div>
+      </div>
+    </md-input-container>
+
+
+    </div>
+
+     <md-input-container fex>
+     <label>Aid Rate (USD)</label>
+     <input ng-model="memberAid.aides" type="number" step="0.01">
+   </md-input-container>
+
+   <div layout="row" layout-align="start" flex>
+     <div layout="row" layout-align="start" flex"85">
+
+          <h4>Start Date </h4>
+          <md-datepicker
+             ng-model="memberAid.date"
+             md-placeholder="Enter date">
+           </md-datepicker>
+          <h4>Due dates</h4>
+          <md-datepicker
+             ng-model="memberAid.dueDate"
+             md-placeholder="Enter date">
+           </md-datepicker>
+       </div>
+       <div layout="row" layout-align="end" flex"15">
+         <md-button ng-click="save()" class="md-primary">Save</md-button>
+       </div>
+   </div>
+  </form>
+
+                    </div>
+                    <div ng-switch-when="monthlyPayments">
+                      <form name="myForm">
+    <p>
+                   MAC-USA MONTHLY PAYMENT
+    </p>
+
+    <div layout="row" layout-align="start" flex>
+      <md-input-container flex>
+        <label>Aid descriptions</label>
+        <input type="text" name="quest" ng-model="memberAid.descriptions" required />
+      </md-input-container>
+
+
+    </div>
+    <div layout="row" layout-align="start" flex>
+    <md-input-container flex>
+      <label>List of Insured Members</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()" required>
+        <md-optgroup label="List of Members Insured ">
+          <md-option ng-value="item" ng-repeat="item in items">{{item}}</md-option>
+        </md-optgroup>
+      </md-select>
+      <div class="errors" ng-messages="myForm.favoriteColor.$error">
+        <div ng-message="required">Required</div>
+      </div>
+    </md-input-container>
+
+
+    </div>
+
+     <md-input-container fex>
+     <label>Aid Rate (USD)</label>
+     <input ng-model="memberAid.aides" type="number" step="0.01">
+   </md-input-container>
+
+   <div layout="row" layout-align="start" flex>
+     <div layout="row" layout-align="start" flex"85">
+
+          <h4>Start Date </h4>
+          <md-datepicker
+             ng-model="memberAid.date"
+             md-placeholder="Enter date">
+           </md-datepicker>
+          <h4>Due dates</h4>
+          <md-datepicker
+             ng-model="memberAid.dueDate"
+             md-placeholder="Enter date">
+           </md-datepicker>
+       </div>
+       <div layout="row" layout-align="end" flex"15">
+         <md-button ng-click="save()" class="md-primary">Save</md-button>
+       </div>
+   </div>
+  </form>
+
+                    </div>
+                    <div ng-switch-when="tontines">
+                      <form name="myForm">
+    <p>
+                 MAC-USA Tontine
+    </p>
+
+    <div layout="row" layout-align="start" flex>
+      <md-input-container flex>
+        <label>Aid descriptions</label>
+        <input type="text" name="quest" ng-model="memberAid.descriptions" required />
+      </md-input-container>
+
+
+    </div>
+    <div layout="row" layout-align="start" flex>
+    <md-input-container flex>
+      <label>List of Insured Members</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()" required>
+        <md-optgroup label="List of Members Insured ">
+          <md-option ng-value="item" ng-repeat="item in items">{{item}}</md-option>
+        </md-optgroup>
+      </md-select>
+      <div class="errors" ng-messages="myForm.favoriteColor.$error">
+        <div ng-message="required">Required</div>
+      </div>
+    </md-input-container>
+
+
+    </div>
+
+     <md-input-container fex>
+     <label>Aid Rate (USD)</label>
+     <input ng-model="memberAid.aides" type="number" step="0.01">
+   </md-input-container>
+
+   <div layout="row" layout-align="start" flex>
+     <div layout="row" layout-align="start" flex"85">
+
+          <h4>Start Date </h4>
+          <md-datepicker
+             ng-model="memberAid.date"
+             md-placeholder="Enter date">
+           </md-datepicker>
+          <h4>Due dates</h4>
+          <md-datepicker
+             ng-model="memberAid.dueDate"
+             md-placeholder="Enter date">
+           </md-datepicker>
+       </div>
+       <div layout="row" layout-align="end" flex"15">
+         <md-button ng-click="save()" class="md-primary">Save</md-button>
+       </div>
+   </div>
+  </form>
+
+                    </div>
+                    <div ng-switch-when="gAMeetings">
+
+                      <form name="myForm">
+    <p>
+                   MAC-USA GENERAL ASSEMBLY ASSIGNMENT
+    </p>
+
+    <div layout="row" layout-align="start" flex>
+      <md-input-container flex>
+        <label>Aid descriptions</label>
+        <input type="text" name="quest" ng-model="memberAid.descriptions" required />
+      </md-input-container>
+
+
+    </div>
+    <div layout="row" layout-align="start" flex>
+    <md-input-container flex>
+      <label>List of Insured Members</label>
+        <md-select ng-model="selectedItem" md-selected-text="getSelectedText()" required>
+        <md-optgroup label="List of Members Insured ">
+          <md-option ng-value="item" ng-repeat="item in items">{{item}}</md-option>
+        </md-optgroup>
+      </md-select>
+      <div class="errors" ng-messages="myForm.favoriteColor.$error">
+        <div ng-message="required">Required</div>
+      </div>
+    </md-input-container>
+
+
+    </div>
+
+     <md-input-container fex>
+     <label>Aid Rate (USD)</label>
+     <input ng-model="memberAid.aides" type="number" step="0.01">
+   </md-input-container>
+
+   <div layout="row" layout-align="start" flex>
+     <div layout="row" layout-align="start" flex"85">
+
+          <h4>Start Date </h4>
+          <md-datepicker
+             ng-model="memberAid.date"
+             md-placeholder="Enter date">
+           </md-datepicker>
+          <h4>Due dates</h4>
+          <md-datepicker
+             ng-model="memberAid.dueDate"
+             md-placeholder="Enter date">
+           </md-datepicker>
+       </div>
+       <div layout="row" layout-align="end" flex"15">
+         <md-button ng-click="save()" class="md-primary">Save</md-button>
+       </div>
+   </div>
+  </form>
+
+                    </div>
+                </div>

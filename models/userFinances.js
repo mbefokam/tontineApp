@@ -14,27 +14,35 @@ module.exports = function (sequelize, DataTypes) {
             , allowNull: false
         }, recouvrements: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }, 
         aides: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
         , descriptions: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         },
         payments: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         },
         date: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }, 
         dueDate: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }, 
         totalPayments: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         },
         status: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         
     }, {

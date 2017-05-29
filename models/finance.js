@@ -6,34 +6,43 @@ module.exports = function (sequelize, DataTypes) {
             , primaryKey: true
             , autoIncrement: true
             , allowNull: false
-        }, 
+        },
         aides: {
             type: DataTypes.DECIMAL(10, 2)
+            ,defaultValue: '0'
         }
         , recouvrements: {
             type: DataTypes.DECIMAL(10, 2)
+            ,defaultValue: '0'
         }
         , descriptions: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         },
         totalspayments: {
             type: DataTypes.DECIMAL(10, 2)
+            ,defaultValue: '0'
         },
         status: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , date: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , dueDate: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
-        
+
         , totalAssrance: {
             type: DataTypes.DECIMAL(10, 2)
+            ,defaultValue: '0'
         },
         totalInscription: {
             type: DataTypes.DECIMAL(10, 2)
+            ,defaultValue: '0'
         }
     }, {
         freezeTableName: true
@@ -58,13 +67,14 @@ module.exports = function (sequelize, DataTypes) {
                 }).then(onSuccess).error(onError);
             }
             , read: function (onSuccess, onError) {
+              console.log("I AM HERE ...")
                 finances.findAll({
                   limit: 1,
-                  order: [['id','DESC']]  
+                  order: [['id','DESC']]
                 }).then(onSuccess).error(onError);
             }
             , recouvrement: function ( onSuccess, onError) {
-                
+
                 finances.findAll({
                   limit: 1,
                   order: [['id','DESC']]

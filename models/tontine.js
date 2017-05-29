@@ -13,9 +13,11 @@ module.exports = function (sequelize, DataTypes) {
         }
         , tontineOneMontant: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
         ,  tontineTwoMontant: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
         , months: {
             type: DataTypes.STRING

@@ -1,0 +1,637 @@
+<div class="container" layout="column" ng-cloak>
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <!--<md-button ng-click="toggleLeft()" class="md-primary">
+        Menu
+      </md-button>-->
+            <md-button class="md-fab md-primary" aria-label="Navigation" ng-click="toggleLeft()">
+                <md-icon md-component-id="left" class="md-sidenav-left" md-svg-icon="../img/home/menu.png"></md-icon> Menu </md-button>
+            <h2 class="md-flex">Welcome : <p style="display:inline" ng-bind="vm.userData.firstName"></h2> </div>
+    </md-toolbar>
+    <md-content flex layout-padding>
+        <section layout="row" flex="">
+            <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" id="leftSideNav" md-disable-backdrop="true">
+                <md-toolbar class="md-theme-indigo" layout="row">
+                    <h1 class="md-toolbar-tools">Menu </h1> <span flex></span>
+                    <md-button ng-click="close()">Close</md-button>
+                </md-toolbar>
+                <md-content layout-padding="" layout="column" layout-align="start start">
+                    <md-button ng-click="show('userprofile')" class="md-primary">Profile</md-button>
+                    <md-button ng-click="show('myFinances')" class="md-primary">my-Finances</md-button>
+                    <md-button ng-click="show('monthlyPayments')" class="md-primary">my-Monthly Payments</md-button>
+                    <md-button ng-click="show('gAMeetings')" class="md-primary">GA Meetings Calendar</md-button>
+                    <!--<md-button ng-click="show('macUSAFinances')" class="md-primary">MAC-USA Finances</md-button>-->
+                    <md-button ng-click="show('monthlyFeesReport')" class="md-primary">MAC-Monthly Fees Report</md-button>
+                    <md-button ng-click="show('monthlyfood')" class="md-primary">MAC-Monthly Foods Report Fees</md-button>
+                    <md-button ng-click="show('tontines')" class="md-primary">MAC-Monthly Tontine Reports</md-button>
+                </md-content>
+            </md-sidenav>
+            <md-content flex="" layout-padding="" layout="column" layout-align="top center">
+                <div ng-switch="toShow">
+                    <div ng-switch-when="userprofile">
+                        <md-content class="md-padding" layout-xs="column" layout="row">
+                            <div flex-xs flex-gt-xs="50" layout="column">
+                                <md-card> <img ng-src="{{imagePath}}" class="md-card-image" alt="PROFILE ">
+                                    <md-card-content> FIRST NAME :
+                                        <p style="display:inline" ng-bind="vm.userData.firstName">
+                                            <br>
+                                            <p></p> LAST NAME :
+                                            <p style="display:inline" ng-bind="vm.userData.lastName">
+                                                <br>
+                                                <p></p> EMAIL:
+                                                <p style="display:inline" ng-bind="vm.userData.email">
+                                                    <br>
+                                                    <p></p> PHONE NUMBER:
+                                                    <p style="display:inline" ng-bind="vm.userData.phone">
+                                                        <br>
+                                                        <p></p> INSCRIPTION DATE :
+                                                        <p style="display:inline" ng-bind="vm.userData.inscriptionMonth">
+                                                            <br>
+                                                            <p></p>
+                                    </md-card-content>
+                                    <md-card-actions layout="row" layout-align="end center">
+                                        <md-button>EDIT</md-button>
+                                        <md-button>SAVE</md-button>
+                                    </md-card-actions>
+                                </md-card>
+                                <md-card> <img ng-src="{{imagePath}}" class="md-card-image" alt="ADDRESS">
+                                    <md-card-content> STREET :
+                                        <p style="display:inline" ng-bind="vm.userData.ADDRESS.street">
+                                            <br>
+                                            <p></p> STREET 2 :
+                                            <p style="display:inline" ng-bind="vm.userData.ADDRESS.street2">
+                                                <br>
+                                                <p></p> CITY :
+                                                <p style="display:inline" ng-bind="vm.userData.ADDRESS.city">
+                                                    <br>
+                                                    <p></p> STATE :
+                                                    <p style="display:inline" ng-bind="vm.userData.ADDRESS.state">
+                                                        <br>
+                                                        <p></p> ZIP CODE :
+                                                        <p style="display:inline" ng-bind="vm.userData.ADDRESS.zipCode">
+                                                            <br>
+                                                            <p></p>
+                                    </md-card-content>
+                                    <md-card-actions layout="row" layout-align="end center">
+                                        <md-button>EDIT</md-button>
+                                        <md-button>SAVE</md-button>
+                                    </md-card-actions>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="50" layout="column">
+                                <md-card> <img ng-src="{{imagePath}}" class="md-card-image" alt="MEMBERSHIP STATUS ">
+                                    <md-card-content> MEMBERSHIP :
+                                        <p style="display:inline" ng-bind="vm.userData.membership">
+                                            <br>
+                                            <p></p> INSCRIPTION :
+                                            <p style="display:inline" ng-bind="vm.userData.inscription">
+                                                <br>
+                                                <p></p> INSURANCE STATUS :
+                                                <p style="display:inline" ng-class="{red: vm.userData.assuranceStatus == 'Uninsured',  green: vm.userData.assuranceStatus === 'Insured'}">{{vm.userData.assuranceStatus}}</p>
+                                                <br>
+                                                <p></p> INSURANCE AMOUNT:
+                                                <p style="display:inline" ng-bind="vm.userData.assurance">
+                                                    <br>
+                                                    <p></p> INSURANCE TO PAY :
+                                                    <p style="display:inline" ng-bind="vm.userData.insuranceBalance">
+                                                        <br>
+                                                        <p></p> TOTAL MAC-USA INSURANCE :
+                                                        <p style="display:inline" ng-bind="vm.userData.macInsurance">
+                                                            <br>
+                                                            <p></p>
+                                    </md-card-content>
+                                </md-card>
+                                <md-card> <img ng-src="{{imagePath}}" class="md-card-image" alt="TONTINE ">
+                                    <md-card-content> CURRENT FIST TOTINE AMOUNT :
+                                        <p style="display:inline" CURRENT FIST TOTINE AMOUNT ng-bind="vm.userData.tontineOnemontant">
+                                            <br>
+                                            <p></p> CURRENT SECOND TOTINE AMOUNT :
+                                            <p style="display:inline" ng-bind="vm.userData.tontineTwomontant">
+                                                <br>
+                                                <p></p> FIST TOTINE RECEPTION DATE :
+                                                <p style="display:inline" ng-bind="vm.userData.monthOfTontineReception">
+                                                    <br>
+                                                    <p></p> SECOND TOTINE RECEPTION DATE :
+                                                    <p style="display:inline" ng-bind="vm.userData.monthOfTontine2Reception">
+                                                        <br>
+                                                        <p></p> MEETING's RECEPTION DATE :
+                                                        <p style="display:inline" ng-bind="vm.userData.monthOfMeetingReception">
+                                                            <br>
+                                                            <p></p>
+                                    </md-card-content>
+                                    <md-card-actions layout="row" layout-align="end center">
+                                        <md-button>EDIT</md-button>
+                                        <md-button>SAVE</md-button>
+                                    </md-card-actions>
+                                </md-card>
+                            </div>
+                        </md-content>
+                    </div>
+                    <div ng-switch-when="myFinances">
+                        <md-content flex="" layout-padding="" layout="column" layout-align="top center">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                    <th ><a >AIDES <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DESCRITIONS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DATE <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >RECOUVREMENTS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DUE DATE <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >PAYMENTS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >PAYMENT STATUS <i class="fa fa-sort"></i></a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="myFinances in myFinancesArr ">
+                                        <td>{{"$ "+myFinances.aides}}</td>
+                                        <td>{{myFinances.descriptions}}</td>
+                                        <td>{{myFinances.date}}</td>
+                                        <td>{{"$ "+myFinances.recouvrements}}</td>
+                                        <td>{{myFinances.dueDate}}</td>
+                                        <td>{{"$ "+myFinances.payments}}</td>
+                                        <td>{{myFinances.status}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <at-pagination at-list="list" at-config="config"></at-pagination>
+                        </md-content>
+                    </div>
+                    <div ng-switch-when="monthlyPayments">
+                        <!--<b>MONTHLY ACTIVITIES FEES</b> -->
+                        <p style="display:inline" ng-class="{green: '1' == '1',  red: '2' === '1' }"><b>MONTHLY ACTIVITIES FEES</b></p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="frreport in frreports">
+                                    <td>{{frreport.USER.firstName +", "+frreport.USER.lastName}}</td>
+                                    <td>{{frreport.years}}</td>
+                                    <td>{{"$ "+frreport.Jan }}</td>
+                                    <td>{{"$ "+frreport.Feb}}</td>
+                                    <td>{{"$ "+frreport.Mar}}</td>
+                                    <td>{{"$ "+frreport.Apr}}</td>
+                                    <td>{{"$ "+frreport.May}}</td>
+                                    <td>{{"$ "+frreport.Jun}}</td>
+                                    <td>{{"$ "+frreport.Jul}}</td>
+                                    <td>{{"$ "+frreport.Aug}}</td>
+                                    <td>{{"$ "+frreport.Sept}}</td>
+                                    <td>{{"$ "+frreport.Oct}}</td>
+                                    <td>{{"$ "+frreport.Nov}}</td>
+                                    <td>{{"$ "+frreport.Dec}}</td>
+                                    <td>{{"$ "+frreport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="display:inline" ng-class="{red: '1' == '1',  green: '2' === '1' }"><b>MONTHLY FOOD FEES</b></p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="foodreport in foodreports">
+                                    <td>{{foodreport.USER.firstName +", "+foodreport.USER.lastName}}</td>
+                                    <td>{{foodreport.years}}</td>
+                                    <td>{{"$ "+foodreport.Jan }}</td>
+                                    <td>{{"$ "+foodreport.Feb}}</td>
+                                    <td>{{"$ "+foodreport.Mar}}</td>
+                                    <td>{{"$ "+foodreport.Apr}}</td>
+                                    <td>{{"$ "+foodreport.May}}</td>
+                                    <td>{{"$ "+foodreport.Jun}}</td>
+                                    <td>{{"$ "+foodreport.Jul}}</td>
+                                    <td>{{"$ "+foodreport.Aug}}</td>
+                                    <td>{{"$ "+foodreport.Sept}}</td>
+                                    <td>{{"$ "+foodreport.Oct}}</td>
+                                    <td>{{"$ "+foodreport.Nov}}</td>
+                                    <td>{{"$ "+foodreport.Dec}}</td>
+                                    <td>{{"$ "+foodreport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="display:inline" ng-class="{green: '1' == '1',  red: '2' === '1' }"><b>TONTINE  $100.00</b></p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="tontineOnereport in tontineOnereports">
+                                    <td>{{tontineOnereport.USER.firstName +", "+tontineOnereport.USER.lastName}}</td>
+                                    <td>{{tontineOnereport.years}}</td>
+                                    <td>{{"$ "+tontineOnereport.Jan }}</td>
+                                    <td>{{"$ "+tontineOnereport.Feb}}</td>
+                                    <td>{{"$ "+tontineOnereport.Mar}}</td>
+                                    <td>{{"$ "+tontineOnereport.Apr}}</td>
+                                    <td>{{"$ "+tontineOnereport.May}}</td>
+                                    <td>{{"$ "+tontineOnereport.Jun}}</td>
+                                    <td>{{"$ "+tontineOnereport.Jul}}</td>
+                                    <td>{{"$ "+tontineOnereport.Aug}}</td>
+                                    <td>{{"$ "+tontineOnereport.Sept}}</td>
+                                    <td>{{"$ "+tontineOnereport.Oct}}</td>
+                                    <td>{{"$ "+tontineOnereport.Nov}}</td>
+                                    <td>{{"$ "+tontineOnereport.Dec}}</td>
+                                    <td>{{"$ "+tontineOnereport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="display:inline" ng-class="{red: '1' == '1',  green: '2' === '1' }"> <b>TONTINE  $500.00</b></p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="tontineTworeport in tontineTworeports">
+                                    <td>{{tontineTworeport.USER.firstName +", "+tontineTworeport.USER.lastName}}</td>
+                                    <td>{{tontineTworeport.years}}</td>
+                                    <td>{{"$ "+tontineTworeport.Jan }}</td>
+                                    <td>{{"$ "+tontineTworeport.Feb}}</td>
+                                    <td>{{"$ "+tontineTworeport.Mar}}</td>
+                                    <td>{{"$ "+tontineTworeport.Apr}}</td>
+                                    <td>{{"$ "+tontineTworeport.May}}</td>
+                                    <td>{{"$ "+tontineTworeport.Jun}}</td>
+                                    <td>{{"$ "+tontineTworeport.Jul}}</td>
+                                    <td>{{"$ "+tontineTworeport.Aug}}</td>
+                                    <td>{{"$ "+tontineTworeport.Sept}}</td>
+                                    <td>{{"$ "+tontineTworeport.Oct}}</td>
+                                    <td>{{"$ "+tontineTworeport.Nov}}</td>
+                                    <td>{{"$ "+tontineTworeport.Dec}}</td>
+                                    <td>{{"$ "+tontineTworeport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-switch-when="tontines">
+                        <p style="display:inline" ng-class="{green: '1' == '1',  red: '2' === '1' }"><b>TONTINE  $100.00</b></p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="tontineAllOnereport in tontineAllOnereports">
+                                    <td>{{tontineAllOnereport.USER.firstName +", "+tontineAllOnereport.USER.lastName}}</td>
+                                    <td>{{tontineAllOnereport.years}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Jan }}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Feb}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Mar}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Apr}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.May}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Jun}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Jul}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Aug}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Sept}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Oct}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Nov}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Dec}}</td>
+                                    <td>{{"$ "+tontineAllOnereport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="display:inline" ng-class="{red: '1' == '1',  green: '2' === '1' }"> <b>TONTINE  $500.00</b></p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="tontineAllTworeport in tontineAllTworeports">
+                                    <td>{{tontineAllTworeport.USER.firstName +", "+tontineAllTworeport.USER.lastName}}</td>
+                                    <td>{{tontineAllTworeport.years}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Jan }}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Feb}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Mar}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Apr}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.May}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Jun}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Jul}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Aug}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Sept}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Oct}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Nov}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Dec}}</td>
+                                    <td>{{"$ "+tontineAllTworeport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-switch-when="gAMeetings">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MONTHS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >HOSTING MEMEBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >ADDRESS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >PHONE NUMBER <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >EMAILS <i class="fa fa-sort"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="agReception in agReceptions">
+                                    <td>{{agReception.monthOfMeetingReception}}</td>
+                                    <td>{{agReception.firstName +", "+agReception.lastName}}</td>
+                                    <td>{{agReception.ADDRESS.street +", "+agReception.ADDRESS.street2 +", "+agReception.ADDRESS.city +", "+agReception.ADDRESS.state +", "+agReception.ADDRESS.zipCode}}</td>
+                                    <td>{{agReception.phone}}</td>
+                                    <td>{{agReception.email}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-switch-when="monthlyfood">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th ><a >MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="macMonthfoodFeesUsersreport in macMonthfoodFeesUsersreports">
+                                    <td>{{macMonthfoodFeesUsersreport.USER.firstName +", "+macMonthfoodFeesUsersreport.USER.lastName}}</td>
+                                    <td>{{macMonthfoodFeesUsersreport.years}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Jan }}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Feb}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Mar}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Apr}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.May}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Jun}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Jul}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Aug}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Sept}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Oct}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Nov}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Dec}}</td>
+                                    <td>{{"$ "+macMonthfoodFeesUsersreport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--i am here-->
+                    <div ng-switch-when="monthlyFeesReport">
+
+
+                        <!--<table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>MEMBERS</th>
+                                    <th>YEARS</th>
+                                    <th>JAN </th>
+                                    <th>FEB  </th>
+                                    <th>MAR </th>
+                                    <th>APR </th>
+                                    <th>MAY</th>
+                                    <th>JUN </th>
+                                    <th>JUL </th>
+                                    <th>AUG </th>
+                                    <th>SEPT </th>
+                                    <th>OCT </th>
+                                    <th>NOV </th>
+                                    <th>DEC </th>
+                                    <th>TOTAL </th>
+                                </tr>
+                            </thead>
+                             <tbody>
+                                 <tr ng-repeat="macMonthFeesUsersreport in macMonthFeesUsersreports">
+                                    <td>{{macMonthFeesUsersreport.USER.firstName +", "+macMonthFeesUsersreport.USER.lastName}}</td>
+                                    <td>{{macMonthFeesUsersreport.years}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Jan }}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Feb}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Mar}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Apr}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.May}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Jun}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Jul}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Aug}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Sept}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Oct}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Nov}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Dec}}</td>
+                                    <td>{{"$ "+macMonthFeesUsersreport.Totals}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+-->
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-group input-group-lg add-on">
+                                    <input type="text" class="form-control search-query" ng-model="query" ng-change="search()" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="text-center">AngularJs Dynamic Data Table</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control input-lg pull-right" ng-model="itemsPerPage" ng-change="perPage()" ng-options="('show '+size+' per page') for size in pageSizes"></select>
+                            </div>
+                        </div>
+                        <hr>
+                      <table class="display table table-bordered table-striped table-hover">
+                            <tbody>
+                                <tr>
+                                    <th class="id"><a ng-click="sort_by('id')">MEMBERS <i class="fa fa-sort"></i></a></th>
+                                    <th class="name"><a ng-click="sort_by('name')">YEARS <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JAN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >FEB <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >APR <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >MAY <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUN <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >JUL <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >AUG <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >SEPT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >OCT <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >NOV <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >DEC <i class="fa fa-sort"></i></a></th>
+                                    <th ><a >TOTAL <i class="fa fa-sort"></i></a></th>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="text-center">
+                                            <ul class="pagination">
+                                                <li ng-class="{disabled: currentPage == 0}"> <a href="javascript:;" ng-click="prevPage()">« Prev</a> </li>
+                                                <li ng-repeat="n in range(pagedItems.length)" ng-class="{active: n == currentPage}" ng-click="setPage()"> <a href="javascript:;" ng-bind="n + 1">1</a> </li>
+                                                <li ng-class="{disabled: currentPage == pagedItems.length - 1}"> <a href="javascript:;" ng-click="nextPage()">Next »</a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+
+                                <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
+                                   <td>{{item.USER.firstName +", "+item.USER.lastName}}</td>
+                                   <td>{{item.years}}</td>
+                                    <td>{{item.Jan}}</td>
+                                    <td>{{item.Feb}}</td>
+                                    <td>{{item.Mar}}</td>
+                                    <td>{{item.Apr}}</td>
+                                    <td>{{item.May}}</td>
+                                    <td>{{item.Jun}}</td>
+                                    <td>{{item.Jul}}</td>
+                                    <td>{{item.Aug}}</td>
+                                    <td>{{item.Sept}}</td>
+                                    <td>{{item.Oct}}</td>
+                                    <td>{{item.Nov}}</td>
+                                    <td>{{item.Dec}}  </td>
+                                    <td>{{item.Totals}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+
+
+                    </div>
+
+                </div>
+                <!--
+    </md-content>
+  </section>
+
+
+
+
+  </md-content>
+</div>
+
+-->
+                <!--<md-button ng-click="toggleLeft()" class="md-primary">
+        Toggle left
+      </md-button>
+      <md-button
+        class="md-fab md-primary"
+        aria-label="Navigation"
+        ng-click="toggleLeft()">
+        <md-icon md-component-id="left" class="md-sidenav-left" md-svg-icon="../img/home/menu.png"></md-icon>
+      </md-button>
+
+
+
+      <md-content class="md-padding" layout="column">
+<md-grid-list md-cols="1" md-cols-gt-xs="2" md-cols-gt-sm="3" md-cols-gt-md="5" md-cols-gt-lg="7" md-row-height-gt-xs="150px" md-row-height="100px" md-gutter="1em">
+
+    <md-grid-tile>
+<md-card-title>
+    <md-card-title-text>
+    </md-card-title-text>
+</md-card-title>
+</md-grid-tile>
+</md-grid-list>
+</md-content>
+<div flex="50" layout="row" layout-align="center">
+      <md-card flex="50"></md-card>
+    </div>-->

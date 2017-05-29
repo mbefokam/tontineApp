@@ -10,22 +10,55 @@ var activeHf = new Array();
 
 module.exports.data = function (req,cb) {
     var user = users.build();
-    
+
     user.createUser(req.body, function (data) {
         cb(data);
     })
 }
+module.exports.retrieveUser = function (req,cb) {
+  console.log(req.body);
+    var user = users.build();
+
+    user.retrieveUser(req, function (data) {
+        cb(data);
+    })
+}
+
 
 module.exports.retrieveAll = function (cb) {
-    
+
     var user = users.build();
     user.retrieveAll(function (data) {
         cb(data);
     })
 }
 
+module.exports.readUserToAids = function (cb) {
+    var returnArr = []
+    var user = users.build();
+    user.readUserToAids(function (data) {
+
+        for (var i=0; i < data.length; i++){
+          returnArr.push(data[i].firstName + ", "+data[i].lastName)
+        }
+
+        cb(returnArr);
+    })
+}
+
+
+
+module.exports.readForTontineRecep = function (cb) {
+
+    var user = users.build();
+    user.readForTontineRecep(function (data) {
+        cb(data);
+    })
+}
+
+
 module.exports.read = function (cb) {
-   
+
     var user = users.build();
     user.read(function (data) {
         cb(data);
@@ -59,13 +92,13 @@ module.exports.update = function (req,cb) {
 //    }
 
 
-// load the data from the 
+// load the data from the
 //module.exports.insertData = function (req, cb) {
 //    var health_facilitie;
 //    var heathFArrs = req;
 //    var location;
 //    var reference;
-//     
+//
 //    async.forEachLimit(heathFArrs, 1, function (heathFArr, dataCallback) {
 //        health_facilitie = {
 //            "name_1": heathFArr.name_1
@@ -92,12 +125,12 @@ module.exports.update = function (req,cb) {
 //         function (healthFacilitie, callback) {
 //                if(healthFacilitie){
 //                   if(healthFacilitie.Quartet =="active"){
-//                      activeHf.push(healthFacilitie) 
+//                      activeHf.push(healthFacilitie)
 //                       callback(null, healthFacilitie)
 //                   }else{
-//                      callback(null, healthFacilitie) 
+//                      callback(null, healthFacilitie)
 //                   }
-//                  
+//
 //                }
 //                else{
 //                    if(location.zip=="10001"){
@@ -105,16 +138,16 @@ module.exports.update = function (req,cb) {
 //                    var facilitie = healthfacilitie.build()
 //                   facilitie.createFacilities(health_facilitie, function (healthFacilitie) {
 //                    callback(null, healthFacilitie)
-//                        });  
+//                        });
 //                    }
 //                  else{
 //                      var facilitie = healthfacilitie.build()
 //                     facilitie.createFacilities(health_facilitie, function (healthFacilitie) {
 //                    callback(null, healthFacilitie)
-//                   }); 
+//                   });
 //                  }
 //                }
-//                
+//
 //            },
 //         function (healthFacilitie, callback) {
 //                location.hf_id = healthFacilitie.id
@@ -136,12 +169,12 @@ module.exports.update = function (req,cb) {
 //                   hfAndLoc.push(healthFacilitie)
 //                   hfAndLoc.push(locationData)
 //                  callback(null, response)
-//               }) 
+//               })
 //                }
-//                
+//
 //            }
 //    ], function (err, result) {
-//            console.log('done') 
+//            console.log('done')
 //            response.push(hfAndLoc)
 //            dataCallback()
 //        });
@@ -150,5 +183,5 @@ module.exports.update = function (req,cb) {
 //        console.log("Health Facilities For Loop Completed");
 //        cb(response);
 //    });
-//    
+//
 //}

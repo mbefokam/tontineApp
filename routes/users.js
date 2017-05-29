@@ -5,9 +5,46 @@ var users = require('../controllers/users')
 var address = require('../controllers/addresses')
 var finances = require('../controllers/finances')
 var monthlyFees = require('../controllers/monthlypayments')
+var monthlyReport = require('../controllers/monthlyReports')
 
-router.get('/user', function (req, res) {
-     
+router.post('/user', function (req, res) {
+     users.retrieveUser(req, function (userData) {
+         if (userData) {
+             res.json(userData);
+         }
+         else {
+             res.send(401, "data not found in the table");
+         }
+     });
+ });
+
+
+
+router.get('/all/user/to/aids', function (req, res) {
+
+     users.readUserToAids(function (userData) {
+         if (userData) {
+             res.json(userData);
+         }
+         else {
+             res.send(401, "data not found in the table");
+         }
+     });
+ });
+
+router.get('/all/user/reception', function (req, res) {
+
+     users.readForTontineRecep(function (userData) {
+         if (userData) {
+             res.json(userData);
+         }
+         else {
+             res.send(401, "data not found in the table");
+         }
+     });
+ });
+router.get('/all/user', function (req, res) {
+
      users.retrieveAll(function (userData) {
          if (userData) {
              res.json(userData);
@@ -18,7 +55,7 @@ router.get('/user', function (req, res) {
      });
  });
 router.get('/user/actives', function (req, res) {
-    
+
      users.read(function (userData) {
          if (userData) {
              res.json(userData);
@@ -41,7 +78,7 @@ router.post('/user/recouvrements', function (req, res) {
  });
 
 router.post('/create/user', function (req, res) {
-    
+
      users.data(req, function (err, userData) {
          if (err) {
              res.json(err);
@@ -53,7 +90,7 @@ router.post('/create/user', function (req, res) {
  });
 
 router.put('/update/user', function (req, res) {
-    
+
      users.update(req, function (err, userData) {
          if (err) {
              res.json(err);
@@ -65,7 +102,7 @@ router.put('/update/user', function (req, res) {
  });
 
 router.post('/create/address', function (req, res) {
-    
+
      address.data(req, function (err, userAddress) {
          if (err) {
              res.json(err);
@@ -77,7 +114,7 @@ router.post('/create/address', function (req, res) {
  });
 
 router.put('/update/address', function (req, res) {
-    
+
      address.update(req, function (err, userAddress) {
          if (err) {
              res.json(err);
@@ -89,7 +126,7 @@ router.put('/update/address', function (req, res) {
  });
 
 router.get('/read/:id/address', function (req, res) {
-    
+
      address.retrieveAll(req,function (userAddress) {
          if (userAddress) {
              res.json(userAddress);
@@ -100,8 +137,10 @@ router.get('/read/:id/address', function (req, res) {
      });
  });
 
+
+
 router.get('/read/monthlyfees', function (req, res) {
-    
+
      monthlyFees.readAll(function (monthlyfees) {
          if (monthlyfees) {
              res.json(monthlyfees);
@@ -112,6 +151,18 @@ router.get('/read/monthlyfees', function (req, res) {
      });
  });
 
+
+router.get('/users/reports', function (req, res) {
+
+     monthlyFees.activitiesReport(function (monthlyfees) {
+         if (monthlyfees) {
+             res.json(monthlyfees);
+         }
+         else {
+             res.send(401, "data not found in the table");
+         }
+     });
+ });
 
 
 router.post('/insert/months/years', function (req, res) {
@@ -153,7 +204,7 @@ router.post('/insert/monthly/tontine', function (req, res) {
 
 
 router.get('/read/finances', function (req, res) {
-    
+
      finances.read(function (finances) {
          if (finances) {
              res.json(finances);
@@ -165,55 +216,28 @@ router.get('/read/finances', function (req, res) {
  });
 
 
+router.post('/report/category', function (req, res) {
+
+     monthlyReport.readAll(req,function (report) {
+         if (report) {
+             res.json(report);
+         }
+         else {
+             res.send(401, "report not found in the table");
+         }
+     });
+ });
+ router.post('/report/all/user/category', function (req, res) {
+
+     monthlyReport.readAllUsers(req,function (report) {
+         if (report) {
+             res.json(report);
+         }
+         else {
+             res.send(401, "report not found in the table");
+         }
+     });
+ });
 
 
-
-//router.delete('/data', function (req, res) {
-//    
-//     health_facilities.delete(function (healthData) {
-//         if (healthData) {
-//             res.json(healthData);
-//         }
-//         else {
-//             res.send(401, "data not found in the table");
-//         }
-//     });
-// });
-//
-//router.get('/data', function (req, res) {
-//    var resObj = {
-//        url: "https://data.cityofnewyork.us/resource/8nqg-ia7v.json"
-//        , method: 'GET'
-//        , json: req.body
-//    };
-//    request(resObj, function (error, response, body) {
-//        if (error) {
-//            res.send(response.statusCode);
-//        }
-//        else {
-//            health_facilities.insertData(body, function (success) {
-//                if (success) {
-//                    res.json(success);
-//                }
-//                else {
-//                    res.json(401, "not data to return.");
-//                }
-//            }, function (err) {
-//                res.status(500).json(err);
-//            });
-//            
-//        }
-//    });
-//});
-//router.get('/health/facilities', function (req, res) {
-//    
-//     health_facilities.data(function (healthData) {
-//         if (healthData) {
-//             res.json(healthData);
-//         }
-//         else {
-//             res.send(401, "data not found in the table");
-//         }
-//     });
-// });
 module.exports = router;

@@ -9,52 +9,70 @@ module.exports = function (sequelize, DataTypes) {
         }
         , firstName: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , lastName: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , assuranceStatus: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         },
         membership: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         ,
         inscription: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         },
         inscriptionMonth: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         },
         year: {
             type: DataTypes.CHAR
+            ,defaultValue: ''
         }
         , assurance: {
             type: DataTypes.DECIMAL(5, 2)
+            ,defaultValue: '0'
         }
         , monthOfMeetingReception: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , monthOfTontineReception: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , tontineOnemontant: {
             type: DataTypes.DECIMAL(10, 2)
+            ,defaultValue: '0'
         }
         , monthOfTontine2Reception: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , tontineTwomontant: {
             type: DataTypes.DECIMAL(10, 2)
+            ,defaultValue: '0'
         }
         , phone: {
             type: DataTypes.STRING
+            ,defaultValue: ''
         }
         , email: {
             type: DataTypes.STRING
             , allowNull: false
             , unique: true
-        }
+        }  , admin: {
+              type: DataTypes.STRING
+              , allowNull: false
+
+          }
     }, {
         freezeTableName: true
         , tableName: 'users'
@@ -75,8 +93,11 @@ module.exports = function (sequelize, DataTypes) {
                     })
                    , users.hasMany(models.TONTINE, {
                         foreignKey: 'uid'
+                    }),
+                     users.hasMany(models.MONTHLY_REPORTS, {
+                        foreignKey: 'uid'
                     })
-                
+
             }
         }
         , instanceMethods: {
@@ -95,6 +116,8 @@ module.exports = function (sequelize, DataTypes) {
                ]
                 }).then(onSuccess).error(onError);
             },
+
+
             retrieveById: function ( /*req,*/ onSuccess, onError) {
                 finances.findAll({
                     where: {
@@ -102,10 +125,10 @@ module.exports = function (sequelize, DataTypes) {
                     }
                 }).then(onSuccess).error(onError);
             }
-            
-            
+
+
             , create: function (req, onSuccess, onError) {
-                
+
                 users.create(req, {
                     include: [
                         {
@@ -132,7 +155,34 @@ module.exports = function (sequelize, DataTypes) {
                         membership: "active"
                     }
                 }).then(onSuccess).error(onError);
-            }, readOne: function (req, onSuccess, onError) {
+            },
+            readUserToAids: function (onSuccess, onError) {
+                users.findAll({
+                  attributes: ['firstName', 'lastName'],
+                    where: {
+                      $and: {
+                         membership: "active"
+                         ,assuranceStatus: "Insured"
+                     }
+                    }
+                }).then(onSuccess).error(onError);
+            },
+            readForTontineRecep: function (onSuccess, onError) {
+                users.findAll({
+                  include: [
+                      {
+                          model: sequelize.import('./address.js')
+                 }],
+                  where: {
+                       $and: {
+                          membership: "active"
+                          ,monthOfMeetingReception: {$ne: null}
+                      }
+                  }
+                }).then(onSuccess).error(onError);
+            },
+
+            readOne: function (req, onSuccess, onError) {
                 users.find({
                     where: {
                         id: req.uid
@@ -161,6 +211,34 @@ module.exports = function (sequelize, DataTypes) {
                     , where: {
                         membership: "active"
                     }
+                }).then(onSuccess).error(onError);
+            },
+            retrieveUser: function (req, onSuccess, onError) {
+                users.find({
+                    include: [
+                        {
+                            model: sequelize.import('./address.js')
+                   }, {
+                            model: sequelize.import('./userFinances.js')
+                   }, {
+                            model: sequelize.import('./monthly_fees.js')
+                   }, {
+                            model: sequelize.import('./paymentHistory.js')
+                   }, {
+                            model: sequelize.import('./tontine.js')
+                   }, {
+                            model: sequelize.import('./monthlyReports.js')
+                   }
+
+           ]
+                  ,
+                   where: {
+                       $and: {
+                          membership: "active"
+                          ,email: req.body.email
+                      }
+                  }
+
                 }).then(onSuccess).error(onError);
             }
             , retrieve: function (req, onSuccess, onError) {
