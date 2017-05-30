@@ -232,7 +232,7 @@ router.post('/report/category', function (req, res) {
  });
 
  router.post('/aids/payment', function (req, res) {
-   
+
       userFinance.paymentsRec(req, function (paymentData) {
           if (paymentData) {
               res.json(paymentData);
@@ -242,4 +242,16 @@ router.post('/report/category', function (req, res) {
           }
       });
   });
+
+  router.get('/mac/currentFinance', function (req, res) {
+
+       finances.readAccount(function (userData) {
+           if (userData) {
+               res.json(userData);
+           }
+           else {
+               res.send(401, "data not found in the table");
+           }
+       });
+   });
 module.exports = router;

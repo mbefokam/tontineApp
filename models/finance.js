@@ -88,10 +88,18 @@ module.exports = function (sequelize, DataTypes) {
                 finances.find({
                   where: {
                       id: req.tfid
-                  }
-                }).then(onSuccess).error(onError);
-            }
-        , }
+                   }
+                }
+              ).then(onSuccess).error(onError);
+            },
+            read2 : function(req, onSuccess, onError){
+             finances.find({
+               where: {
+                   id: req.tfid
+                }
+           }).then(onSuccess).error(onError);
+         }
+      }
     });
     return finances;
 };

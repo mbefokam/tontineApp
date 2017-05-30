@@ -13,7 +13,7 @@ module.exports.paymentsRec = function (req, cb) {
             var Userpayment = req.body
             var payment = Userpayment.payments
 
-            if (Userpayment.payments == Userpayment.recouvrements){
+            if (Userpayment.payments >= Userpayment.recouvrements){
 
               var user = users.build();
               user.readOne(Userpayment,function (data) {
@@ -23,10 +23,9 @@ module.exports.paymentsRec = function (req, cb) {
 
             }
              else {
-
                Userpayment.totalPayments = Userpayment.totalPayments + Userpayment.payments
     //           Userpayment.paymentDateDate =  Userpayment.paymentDateDate.split("T")[0]
-               if (Userpayment.payments == Userpayment.recouvrements)
+               if (Userpayment.payments >= Userpayment.recouvrements)
                {
                  Userpayment.status = "paid"
                }
@@ -42,26 +41,21 @@ module.exports.paymentsRec = function (req, cb) {
           function(recoupay, recou, callback){
 
             if(recoupay == "paid"){
-              callback(null, recoupay, recou);
+              callback(null, recoupay, recou,"paid off");
             }else{
               var totalfinance = totalfinances.build();
                 totalfinance.read(function (data) {
                   var obj = JSON.stringify(data)
                   var financeReturn = JSON.parse(obj)
-                    console.log("testing before......... "+ obj)
-                    console.log("testing financeReturn ........."+ financeReturn)
-                    console.log("testing recoupay.payments ........."+ recoupay.payments)
-                    console.log("testing recoupay.recou ........."+ recou.payments)
                   financeReturn.assurance = financeReturn.assurance + recou.payments
-                    console.log("testing financeReturn after........."+ financeReturn)
                   callback(null, recoupay, recou,financeReturn);
                 })
             }
           },
-          function(recoupay, recou, financeData,callback){
+          function(recoupay, recou, financeData, callback){
 
             if(recoupay == "paid"){
-              callback(null, recoupay, recou);
+              callback(null, recoupay, recou,financeData);
             }else{
 
               var totalfinance = totalfinances.build();
@@ -75,15 +69,14 @@ module.exports.paymentsRec = function (req, cb) {
           function(recoupay, recou,totalFin, callback){
 
             if(recoupay == "paid"){
-              callback(null, recoupay, recou);
+              callback(null, recoupay, recou,totalFin);
             }
               else{
                 var finances = finance.build();
-                finances.readAid(recou,function (data) {
-                  var obj = JSON.stringify(data)
-                  var financeData = JSON.parse(obj)
-
-                      callback(null, recou, financeData,totalFin);
+                finances.read2(recou,function (data) {
+                    var obj = JSON.stringify(data)
+                    var financedata = JSON.parse(obj)
+                      callback(null, recou, financedata ,totalFin);
                 })
 
               }
@@ -93,21 +86,18 @@ module.exports.paymentsRec = function (req, cb) {
              if(request == "paid"){
                callback(null, financeT);
              }else{
-
                financeT.totalspayments = financeT.totalspayments + request.payments
                financeT.totalAssrance = financeT.totalAssrance + request.payments
 
-               if (financeT.totalPayments == financeT.aids){
+               if (financeT.totalspayments >= financeT.aides){
                  financeT.status = "paid"
                }
                else{
                  financeT.status = "unpaid"
                }
-              //  console.log("I AM HERE AFTER ...")
-              //  console.log(financeT)
                var finances = finance.build();
                finances.updatePayment(financeT ,function (data) {
-
+                     console.log("HER............ "+data)
                      callback(null,  data);
                })
              }
@@ -116,23 +106,5 @@ module.exports.paymentsRec = function (req, cb) {
          ], function (err, result) {
            cb(result)
         });
-
-        function assuranceUpdate ( data){
-
-          var finance = {
-          "id":0,
-          "aides":150,
-  				"recouvrements":300,
-  				"descriptions":"naissance du bebe",
-  				"totalspayments":50,
-  				"date":"2017-04-27",
-  				"dueDate":"2017-07-27",
-  				"totalAssrance":"2017-05-29",
-  				"totalInscription":0
-          }
-
-          return finance
-
-        }
 
 }

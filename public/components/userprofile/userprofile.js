@@ -78,6 +78,14 @@ angular.module('app.userprofile',['ngMaterial'])
                             console.log("got Error From User PRofile.." ,err)
                         })
 
+                        $http.get('/api/mac/currentFinance', user).then(function(data){
+                          
+                               $scope.totalAssur = data.data.assurance
+
+                            }, function(err){
+                            console.log("got Error From User PRofile.." ,err)
+                        })
+
                         $http.get('/api/read/finances', user).then(function(data){
                                vm.macData = data.data;
 

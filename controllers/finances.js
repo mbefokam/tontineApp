@@ -3,6 +3,7 @@ var address = require('../models/index').ADDRESSES;
 var accoutFinances = require('../models/index').FINANCES;
 var userFinances = require('../models/index').USERFINANCES;
 var address = require('../models/index').MONTHLY_FEES;
+var totalfinances = require('../models/index').TOTALASSURANCE;
 var async = require('async');
 var empty = require('is-empty');
 
@@ -17,6 +18,13 @@ module.exports.read = function (cb) {
     })
 }
 
+module.exports.readAccount = function (cb) {
+
+    var finance = totalfinances.build();
+    finance.read(function (data) {
+        cb(data);
+    })
+}
 
 
 
